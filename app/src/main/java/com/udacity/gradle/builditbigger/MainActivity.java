@@ -5,7 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.focals.jokes.Jokes;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -40,7 +44,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-        Toast.makeText(this, "derp", Toast.LENGTH_SHORT).show();
+        Jokes jokes = new Jokes();
+        Toast toast = Toast.makeText(this, jokes.getJoke(), Toast.LENGTH_SHORT);
+
+        // Setting Toast Text Size
+        ViewGroup group = (ViewGroup) toast.getView();
+        TextView messageTextView = (TextView) group.getChildAt(0);
+        messageTextView.setTextSize(25);
+
+        toast.show();
     }
 
 
