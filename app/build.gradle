@@ -50,4 +50,5 @@ dependencies {
 
     implementation project(':jokes')
     implementation project(':jokescreen')
+    implementation project(':backend')
 }
