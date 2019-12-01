@@ -9,8 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.focals.jokes.Jokes;
@@ -30,10 +28,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // Start AsyncTask to fetch data from GCE Server
-        EndpointsAsyncTask endpointsAsyncTask = new EndpointsAsyncTask();
-        endpointsAsyncTask.execute(new Pair<Context, String>(this, "Abhi"));
     }
 
 
@@ -60,20 +54,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-        Jokes jokes = new Jokes();
-        String joke = jokes.getJoke();
-
-        Intent intent = new Intent(this, JokeActivity.class);
-        intent.putExtra("JOKE", joke);
-        startActivity(intent);
+        // Start AsyncTask to fetch data from GCE Server
+        RetreiveJokeAsyncTask endpointsAsyncTask = new RetreiveJokeAsyncTask();
+        endpointsAsyncTask.execute();
     }
 
-    class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
+    class RetreiveJokeAsyncTask extends AsyncTask<Void, Void, String> {
         private MyApi myApiService = null;
-        private Context context;
 
         @Override
-        protected String doInBackground(Pair<Context, String>... params) {
+        protected String doInBackground(Void... params) {
             if(myApiService == null) {  // Only do this once
                 MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                         new AndroidJsonFactory(), null)
@@ -92,11 +82,8 @@ public class MainActivity extends AppCompatActivity {
                 myApiService = builder.build();
             }
 
-            context = params[0].first;
-            String name = params[0].second;
-
             try {
-                return myApiService.sayHi(name).execute().getData();
+                return myApiService.getJoke().execute().getData();
             } catch (IOException e) {
                 return e.getMessage();
             }
@@ -104,7 +91,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(MainActivity.this, JokeActivity.class);
+            intent.putExtra("JOKE", result);
+            startActivity(intent);
         }
     }
 }
