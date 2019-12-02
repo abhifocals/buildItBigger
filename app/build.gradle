@@ -71,3 +71,13 @@ dependencies {
     implementation project(':jokes')
     implementation project(':jokescreen')
 }
+
+task 'asyncTest'(dependsOn: ':backend:appengineStart') {
+
+    finalizedBy 'connectedAndroidTest'
+
+    doLast {
+        ':backend:appengineStop'
+
+    }
+}
