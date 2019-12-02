@@ -9,11 +9,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static android.support.test.espresso.action.ViewActions.click;
 
 @RunWith(AndroidJUnit4.class)
 public class AsyncTaskTest {
@@ -24,15 +24,8 @@ public class AsyncTaskTest {
 
     @Test
     public void test() {
+        Espresso.onView(withId(R.id.button_tellJoke)).perform(click());
 
-
-        Espresso.onView(withId(2)).perform(click());
-
-
-
-        System.out.println();
-
+        onView(withText("Sleep is a weak substitute for coffee.")).check(matches(isDisplayed()));
     }
-
-
 }
