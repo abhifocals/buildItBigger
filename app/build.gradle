@@ -76,5 +76,7 @@ task asyncTest (dependsOn: ':backend:appengineStart') {
 
     finalizedBy 'connectedAndroidTest'
 
-    finalizedBy ':backend:appengineStop'
+    doLast {
+        ':backend:appengineStop'
+    }
 }
