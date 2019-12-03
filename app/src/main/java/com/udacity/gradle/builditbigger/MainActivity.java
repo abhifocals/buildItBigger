@@ -1,17 +1,13 @@
 package com.udacity.gradle.builditbigger;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import com.focals.jokes.Jokes;
 import com.focals.jokescreen.JokeActivity;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -92,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             Intent intent = new Intent(MainActivity.this, JokeActivity.class);
-            intent.putExtra("JOKE", result);
+            intent.putExtra(getString(R.string.jokeTag), result);
             startActivity(intent);
         }
     }
