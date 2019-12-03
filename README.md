@@ -1,3 +1,7 @@
+# Provide your Google Could sdk Path in Module 'backend' gradle file via this property:
+# appengine.tools.cloudSdkHome
+
+
 # Gradle for Android and Java Final Project
 
 In this project, you will create an app with multiple flavors that uses
